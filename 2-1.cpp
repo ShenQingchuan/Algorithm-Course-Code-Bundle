@@ -1,84 +1,46 @@
+/* 2-1.cpp */
 #include <iostream>
-#include <math.h>
-
 
 using namespace std;
 
-#define n 8
-int Board[n][n] = {0};
-int tile = 0;
+/* 	ÔÚÕıÕûÊınµÄËùÓĞ»®·ÖÖĞ, ½«×î´ó¼ÓÊın1 ²»´óÓÚmµÄ»®·Ö¸öÊı¼ÇÎª q(n,m)
+	¿ÉÒÔ½¨Á¢q(n,m)µÄÈçÏÂµİ¹é¹ØÏµ: 
 
-/*
-  @params: tr   æ£‹ç›˜å·¦ä¸Šè§’æ–¹æ ¼çš„è¡Œå·
-  @params: tc   æ£‹ç›˜å·¦ä¸Šè§’æ–¹æ ¼çš„åˆ—å·
-  @params: dr   ç‰¹æ®Šæ–¹æ ¼æ‰€åœ¨çš„è¡Œå·
-  @params: dc   ç‰¹æ®Šæ–¹æ ¼æ‰€åœ¨çš„åˆ—å·
-  @params: size =2^k, æ£‹ç›˜è§„æ ¼ä¸º 2^k x 2^k
+	(1) q(n,1)=1, 					n>=1, µ±×î´ó¼ÓÊın1²»´óÓÚ1Ê±,ÈÎºÎÕıÕûÊınÖ»ÓĞÒ»ÖÖ»®·ÖĞÎÊ½£¬¼´n=1+1+...+1+1
+	(2) q(n,m)=q(n,n), 				m>=n ×î´ó¼ÓÊın1Êµ¼ÊÉÏ²»ÄÜ´óÓÚn, Òò´Ëq(1,m) = 1
+	(3) q(n,n)=1+q(n,n-1),	 		ÕıÕûÊınµÄ»®·ÖÓÉ n1=n µÄ»®·Ö ºÍ n1<=n-1 µÄ»®·Ö×é³É 
+	(4) q(n,m)=q(n,m-1) + q(n-m,m), n>m>1  ÕıÕûÊınµÄ×î´ó¼ÓÊın1²»´óÓÚmµÄ»®·ÖÓÉ n1=m µÄ»®·ÖºÍ n1<=m-1 µÄ»®·Ö×é³É 
+	
+	ËùÒÔ¶Ô q(n,m) ¸ø³öÈçÏÂµİ¹éËãÊ½:
+	 = 1  						n=1,m=1 
+	 = q(n,n)					n<m
+	 = 1 + q(n,n-1)				n=m
+	 = q(n,m-1) + q(n-m,m)		n>m>1
 */
-void ChessBoard(int tr, int tc, int dr, int dc, int size){
-    if (size == 1) {
-        return;
-    }
-    int s = size/2; // åˆ†å‰²æ£‹ç›˜
-    int t = ++tile;
 
-
-    // å…ˆè¦†ç›–æ£‹ç›˜å·¦ä¸Šè§’
-    if (dr < tr+s && dc < tc + s) {  // ç‰¹æ®Šæ–¹æ ¼åœ¨å·¦ä¸Šè§’å­æ£‹ç›˜
-        ChessBoard(tr,tc,dr,dc,s); 
-    }
-    else{ // ç‰¹æ®Šæ–¹æ ¼ä¸åœ¨å·¦ä¸Šè§’å­æ£‹ç›˜ä¸­
-        Board[tr+s-1][tc+s-1] = t;                    // ç”¨ t å· Lå‹éª¨ç‰Œè¦†ç›– å·¦ä¸Šè§’å­æ£‹ç›˜çš„å³ä¸‹è§’
-        ChessBoard(tr, tc, tr+s-1, tc+s-1, s);    // è¦†ç›–å·¦ä¸Šè§’å­æ£‹ç›˜å†…å…¶ä½™æ–¹æ ¼ ï¼ˆtr+s-1, tc+sï¼‰å°±æ˜¯ä¸Šä¸€è¡Œè¦†ç›–çš„é‚£å—
-    }
-    
-    // å†è¦†ç›–æ£‹ç›˜å³ä¸Šè§’
-    if(dr < tr+s && dc >= tc+s) {   // ç‰¹æ®Šæ–¹æ ¼åœ¨å³ä¸Šè§’å­æ£‹ç›˜
-        ChessBoard(tr, tc+s, dr, dc, s);
-    }
-    else{ // ç‰¹æ®Šæ£‹ç›˜ä¹Ÿä¸åœ¨å³ä¸Šè§’å­æ£‹ç›˜ä¸­
-        Board[tr+s-1][tc+s] = t;                // ç”¨ t å· Lå‹éª¨ç‰Œè¦†ç›– å³ä¸Šè§’å­æ£‹ç›˜çš„å·¦ä¸‹è§’
-        ChessBoard(tr, tc+s, tr+s-1, tc+s, s);  // è¦†ç›–å³ä¸Šè§’å­æ£‹ç›˜å†…å…¶ä½™æ–¹æ ¼ 
-    }
-    
-    // å†è¦†ç›–æ£‹ç›˜å·¦ä¸‹è§’
-    if(dr >= tr+s && dc < tc+s) {   // ç‰¹æ®Šæ–¹æ ¼åœ¨å·¦ä¸‹è§’å­æ£‹ç›˜
-        ChessBoard(tr+s, tc, dr, dc, s);
-    }
-    else {
-        Board[tr+s][tc+s-1] = t;                // ç”¨ t å· Lå‹éª¨ç‰Œè¦†ç›– å·¦ä¸‹è§’å­æ£‹ç›˜çš„å³ä¸Šè§’
-        ChessBoard(tr+s, tc, tr+s, tc+s-1, s);  // è¦†ç›–å·¦ä¸‹è§’å­æ£‹ç›˜å†…çš„å…¶ä½™æ–¹æ ¼
-    }
-
-    // æœ€åè¦†ç›–æ£‹ç›˜å³ä¸‹è§’
-    if(dr >= tr+s && dc >= tc+s){  // ç‰¹æ®Šæ–¹æ ¼åœ¨å³ä¸‹è§’å­æ£‹ç›˜
-        ChessBoard(tr+s, tc+s, dr, dc, s);   
-    }
-    else {
-        Board[tr+s][tc+s] = t;                  // ç”¨ t å· Lå‹éª¨ç‰Œè¦†ç›– å³ä¸‹è§’å­æ£‹ç›˜çš„å·¦ä¸Šè§’
-        ChessBoard(tr+s, tc+s, tr+s, tc+s, s);  // è¦†ç›–å³ä¸‹è§’å­æ£‹ç›˜å†…çš„å…¶ä½™æ–¹æ ¼
-    }
+int q(int n, int m){
+	if((n<1) || (m<1)){
+		return 0;
+	}
+	else if((n==1) || (m==1)){
+		return 1;
+	}
+	else if(n<m){
+		return q(n,n);
+	}
+	else if(n==m){
+		return q(n, m-1)+1;
+	}
+	
+	return q(n, m-1) + q(n-m, m);
 }
 
-int main() {
-    int dr = 0, dc = 0;
-    
-    cout << "please give me the position (x,y) of special point: " << endl;
-    cin >> dr >> dc;
-
-    // æ ‡å‡ºç‰¹æ®Šç‚¹
-    Board[dr][dc] = 0;
-
-    ChessBoard(0, 0, dr, dc, n);
-
-    // ç„¶åè¾“å‡º è¦†ç›–å®Œæˆåçš„éª¨ç‰Œæ¥çœ‹çœ‹ã€‚
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < n; j++){
-            cout << Board[i][j] << "\t";
-        }
-        cout << endl;
-    }
-    
-
-    return 0;
+int main(){
+	int n = 0;
+	cout << "Please input the number you wanna divide: ";
+	cin >> n;
+	
+	cout << q(n,n);
+	
+	return 0;
 }
