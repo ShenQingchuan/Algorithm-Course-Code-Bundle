@@ -63,9 +63,9 @@ int MaxSum_DP(int a[],int n){
 
 
 int main(){
-    int a[] = {-2, 11, -4, 13, -5, -2, -7, -8, -9};
-    cout << "分治策略：sum = " << maxSubSum(a, 0, 8) << endl;
-    cout << "动态规划：sum = " << MaxSum_DP(a, 8) << endl;
+    int a[] = {-2 ,11 ,-4 ,13 ,-5 ,-2};
+    cout << "分治策略：sum = " << maxSubSum(a, 0, 7) << endl;
+    cout << "动态规划：sum = " << MaxSum_DP(a, 7) << endl;
 
     return 0;
 }
