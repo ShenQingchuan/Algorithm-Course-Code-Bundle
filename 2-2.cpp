@@ -14,21 +14,21 @@ template<class Type>
 bool IsSwap(Type list[], int nBegin, int nEnd)
 {
     for (int i = nBegin; i < nEnd; i++)
-        if (list[i] == list[nEnd]) //µ±³ı×ÔÉíÓë×ÔÉíÏàµÈ»¹ÓĞÖØ¸´µÄÖµÊ±£¬¾Í²»½øĞĞ½»»»
+        if (list[i] == list[nEnd]) //å½“é™¤è‡ªèº«ä¸è‡ªèº«ç›¸ç­‰è¿˜æœ‰é‡å¤çš„å€¼æ—¶ï¼Œå°±ä¸è¿›è¡Œäº¤æ¢
             return false;
     return true;
 }
 
 
 template<class Type>
-void Perm(Type list[], int k, int m){  	// ²úÉúlist[k:m]µÄÈ«ÅÅÁĞ 
-	if(k==m){  // ½öÊ£ÏÂÒ»¸öÔªËØ 
+void Perm(Type list[], int k, int m){  	// äº§ç”Ÿlist[k:m]çš„å…¨æ’åˆ— 
+	if(k==m){  // ä»…å‰©ä¸‹ä¸€ä¸ªå…ƒç´  
 		for(int i=0; i<=m; i++){
 			cout << list[i];
 		}
 		cout<<endl;
 	}
-	else{	   // »¹ÓĞ¶à¸öÔªËØµÈ´ıÅÅÁĞ, Ôòµİ¹é²úÉúÅÅÁĞ  
+	else{	   // è¿˜æœ‰å¤šä¸ªå…ƒç´ ç­‰å¾…æ’åˆ—, åˆ™é€’å½’äº§ç”Ÿæ’åˆ—  
 		for(int i=k; i<=m; i++){
 			Swap(list[k], list[i]);
 			Perm(list, k+1, m);
@@ -39,7 +39,7 @@ void Perm(Type list[], int k, int m){  	// ²úÉúlist[k:m]µÄÈ«ÅÅÁĞ
 
 template<class Type>
 void Perm_removeSame(Type list[], int k, int m){  	
-	/* ´óÖÂ´úÂë»ù±¾Í¬ÉÏ */
+	/* å¤§è‡´ä»£ç åŸºæœ¬åŒä¸Š */
 	if(k==m){
 		for(int i=0; i<=m; i++){
 			cout << list[i];
@@ -48,7 +48,7 @@ void Perm_removeSame(Type list[], int k, int m){
 	}
 	else{	   
 		for(int i=k; i<=m; i++){
-			/* µ«ÔÚ´ËÖ»ÓĞÃ»ÓĞÖØµşµÄ×Ö·û²Å½»»» */
+			/* ä½†åœ¨æ­¤åªæœ‰æ²¡æœ‰é‡å çš„å­—ç¬¦æ‰äº¤æ¢ */
 			if(IsSwap(list, k, i)){
 				Swap(list[k], list[i]);
 				Perm_removeSame(list, k+1, m);

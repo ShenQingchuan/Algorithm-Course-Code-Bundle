@@ -7,11 +7,12 @@ long long sumNotZero(int n, int k){
     long long low = 0;
     long long cur = 0; // the center of the sepration.
     long long high = 0;
-    while(n / factor){
+    while (n / factor)
+    {
         low = n - (n / factor) * factor;
         cur = (n / factor) % 10;
         high = n / (factor * 10);
-        if ( cur < k )
+        if (cur < k)
             cnt += high * factor;
         else if ( cur == k )
             cnt += high * factor + low + 1;
