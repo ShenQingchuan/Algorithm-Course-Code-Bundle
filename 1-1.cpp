@@ -65,6 +65,5 @@ int main(){
     for(size_t i = 0; i < 10; i++)
         cout << count[i] << endl;
     
-    system("PAUSE");
     return 0;
 }

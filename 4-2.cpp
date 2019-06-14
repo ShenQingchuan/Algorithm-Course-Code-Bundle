@@ -32,7 +32,7 @@ int main() {
     cout << "请输入不超过的总重量：";
     cin >> C;
 
-    int a[n];
+    int *a = new int[n];
     cout << "分别输入" << n << "个物体的重量： ";
 
     for (int i = 0; i < n; i++)

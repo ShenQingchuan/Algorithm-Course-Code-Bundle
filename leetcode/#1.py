@@ -1,9 +1,14 @@
-"""
-暴力解法:
-"""
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        for index in range(0, len(nums)):
-            for other in range(index+1, len(nums)):
-                if nums[index] + nums[other] == target:
-                    return [index, other]
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        h = {}
+        for i, num in enumerate(nums):
+            n = target - num
+            if n not in h:
+                h[num] = i
+            else:
+                return [h[n], i]
