@@ -1,6 +1,9 @@
-#include <stdio.h>
-int flag,sum=0;
-int *s, *x, n,c;
+#include <iostream>
+
+using namespace std;
+
+int flag, sum=0;
+int *s, *x, n, c;
  
 void backtrack(int t)
 {
@@ -12,8 +15,8 @@ void backtrack(int t)
 			flag=1;
 			for(i=0;i<n;i++)
 				if(x[i])
-					printf("%3d",s[i]);
-			printf("\n");
+					cout << s[i] << "   ";
+			cout << endl;
 			return;
 		}
 	}
@@ -31,17 +34,20 @@ void backtrack(int t)
 int main()
 {
 	int i;
-	scanf("%d%d",&n,&c);
+	cout << "请输入数字个数: "; 
+	cin >> n;
+	cout << "请输入和: ";
+	cin >> c;
 	s = new int[n];
 	x = new int[n];
 	for(i=0;i<n;i++){
-		scanf("%d",&s[i]);
+		cin >> s[i];
 		x[i]=0;
 	}
 	backtrack(0);
 	if(flag)
-		printf("找到了解...");
+		cout << "找到了解...";
 	else 
-		printf("没有找到解...");
+		cout << "没有找到解...";
 	return 0;
 }
